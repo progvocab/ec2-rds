@@ -1,0 +1,27 @@
+{
+  "Resources" : {
+    "EC2Vpc" : {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+        "CidrBlock" : "10.0.0.0/16"
+      }
+    },
+    "IPv6CidrBlock" : {
+      "Type" : "AWS::EC2::VPCCidrBlock",
+      "Properties" : {
+        "AmazonProvidedIpv6CidrBlock" : true,
+        "VpcId" : { "Ref" : "EC2Vpc" }
+      }
+    },
+    "EC2Subnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "DependsOn" : "IPv6CidrBlock",
+      "Properties" : {
+        "AssignIpv6AddressOnCreation" : true,
+        "CidrBlock" : { "Fn::Select" : [ 0, { "Fn::Cidr" : [{ "Fn::GetAtt" : [ "EC2Vpc", "CidrBlock" ]}, 1, 8 ]}]},
+        "Ipv6CidrBlock" : { "Fn::Select" : [ 0, { "Fn::Cidr" : [{ "Fn::Select" : [ 0, { "Fn::GetAtt" : [ "EC2Vpc", "Ipv6CidrBlocks" ]}]}, 1, 64 ]}]},
+        "VpcId" : { "Ref" : "EC2Vpc" }
+      }
+    }
+  }
+}
