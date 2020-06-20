@@ -1,0 +1,18 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "MyEC2Instance": {
+            "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+            "Properties": {
+                "Name" : "alb1",
+                "Type" : "application",
+		"IpAddressType" :"ipv4",
+		"LoadBalancerAttributes":{
+			"access_logs.s3.enabled" : true ,
+			"access_logs.s3.bucket"  : "s3://orders-alb-logs/AWSLogs/AccountId1/elasticloadbalancing/us-east-1/"
+		}
+            }
+        }
+    }
+}
+ 
