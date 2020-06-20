@@ -31,6 +31,9 @@
             "Value" : { "Ref" : "EC2Instance" }
         }  
     
+ 
+        "MyStacksRegion" : { "Value" : { "Ref" : "AWS::Region" } }
+ 
         "VPCID" : {
         "Description" : "Referred by other stacks",
         "Value" : "VPCID",
