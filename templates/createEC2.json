@@ -1,7 +1,7 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Resources": {
-        "MyEC2Instance": {
+        "EC2Instance": {
             "Type": "AWS::EC2::Instance",
             "Properties": {
                 "ImageId": "ami-79fd7eee!!!!!notexist",
@@ -25,4 +25,20 @@
             }
         }
     }
+    "Outputs" : {
+        "InstanceID" : {
+            "Description": "The Instance ID",  
+            "Value" : { "Ref" : "EC2Instance" }
+        }  
+    
+        "VPCID" : {
+        "Description" : "Referred by other stacks",
+        "Value" : "VPCID",
+        "Export" : {
+            "Name" : {
+                "Fn::Join" : [ ":", [ { "Ref" : "AWS::StackName" }, "AccountVPC" ] ]
+            }
+        }
+     }
+   }
 }
